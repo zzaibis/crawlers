@@ -1,0 +1,7 @@
+Open crontab as root
+
+sudo crontab -e
+
+*/2 * * * * /home/mdhikonia/google_crawler_cron.sh
+
+

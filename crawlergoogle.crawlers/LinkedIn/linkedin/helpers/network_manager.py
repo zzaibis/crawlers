@@ -1,0 +1,30 @@
+import urllib2
+import base64
+import json
+
+server_ip = "http://104.197.75.34"
+server_port = "8080"
+username = 'tom'
+password = 'pass2'
+# domain = "google"
+
+
+def get_start_urls(domain="linked_in_bing"):
+    # SQL Input
+    request = urllib2.Request("%s:%s/%s" % (server_ip, server_port, domain))
+    base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+    request.add_header("Authorization", "Basic %s" % base64string)
+    response = urllib2.urlopen(request)
+    return response.read()
+
+
+def update_search_param_status(search_param_id, domain="linked_in_bing", status=2):
+    data = json.dumps([{'id': search_param_id,'status': status}])
+
+    request = urllib2.Request("%s:%s/%s" % (server_ip, server_port, domain),
+                              data,
+                              {'Content-Type': 'application/json'})
+
+    base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+    request.add_header("Authorization", "Basic %s" % base64string)
+    urllib2.urlopen(request)
